@@ -1,3 +1,4 @@
 *.pyc
 .DS_Store
 *.db
+/messaging/settings/local.py
