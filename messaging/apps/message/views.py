@@ -4,7 +4,12 @@ from django.views import generic
 from messaging.common.decorators import ValidUserMixin
 
 
-class MessageList(ValidUserMixin, generic.ListView):
+class MessageInbox(ValidUserMixin, generic.ListView):
+
+    pass
+
+
+class MessageSent(ValidUserMixin, generic.ListView):
 
     pass
 
@@ -14,7 +19,7 @@ class MessageShow(ValidUserMixin, generic.DetailView):
     pass
 
 
-class MessageComposeParticular(ValidUserMixin, generic.View):
+class MessageComposeDirect(ValidUserMixin, generic.View):
 
     pass
 

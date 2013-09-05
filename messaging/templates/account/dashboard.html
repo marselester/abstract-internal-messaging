@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-What do you like to do?
+<h1>Dashboard</h1>
+
+You can compose
+a <a href="{% url 'msg_compose_direct' %}">direct message</a>,
+a <a href="{% url 'msg_compose_broadcast' %}">broadcast message</a>
+and group message as well:
+
+<ul>
+    <li>
+        #group name #members quantity
+        <a href="{% url 'msg_compose_group' 1 %}">compose to all members</a>
+    </li>
+</ul>
+
+<h2>Inbox (5 / 500)</h2>
+
+<ul>
+    <li>
+        <a href="{% url 'msg_show' 1 %}">#from #subject</a>
+        #date
+        <a href="{% url 'msg_mark_as_read' %}">mark as read</a>
+        <a href="{% url 'msg_delete' %}">delete</a>
+    </li>
+</ul>
+<a href="{% url 'msg_inbox_list' %}">More</a>
+
+<h2>Sent</h2>
+See your <a href="{% url 'msg_sent_list' %}">sent messages</a>.
 {% endblock %}

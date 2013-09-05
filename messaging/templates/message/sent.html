@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Sent</h2>
+
+<ul>
+    <li>
+        <a href="{% url 'msg_show' 1 %}">#recipients #quantity (#group name or #all) #subject</a>
+        #date
+    </li>
+</ul>
+{% endblock %}
