@@ -1,37 +1,39 @@
 # coding: utf-8
 from django.views import generic
 
-
-class MessageList(generic.ListView):
-
-    pass
+from messaging.common.decorators import ValidUserMixin
 
 
-class MessageShow(generic.DetailView):
+class MessageList(ValidUserMixin, generic.ListView):
 
     pass
 
 
-class MessageComposeParticular(generic.View):
+class MessageShow(ValidUserMixin, generic.DetailView):
 
     pass
 
 
-class MessageComposeBroadcast(generic.View):
+class MessageComposeParticular(ValidUserMixin, generic.View):
 
     pass
 
 
-class MessageComposeGroup(generic.View):
+class MessageComposeBroadcast(ValidUserMixin, generic.View):
 
     pass
 
 
-class MessageMarkAsRead(generic.View):
+class MessageComposeGroup(ValidUserMixin, generic.View):
 
     pass
 
 
-class MessageDelete(generic.View):
+class MessageMarkAsRead(ValidUserMixin, generic.View):
+
+    pass
+
+
+class MessageDelete(ValidUserMixin, generic.View):
 
     pass
