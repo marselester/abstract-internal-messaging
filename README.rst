@@ -19,3 +19,13 @@ users) and are stored by having each user record list all the groups it’s a
 member of. Group membership varies over time and a message should be received
 only by the users who were members of the destination group at the time the
 message was sent.
+
+Testing
+-------
+
+In order to run tests run:
+
+.. code-block:: console
+
+    $ pip install -r requirements_tests.txt
+    $ ./manage.py test --settings=messaging.settings.test

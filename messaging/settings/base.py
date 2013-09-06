@@ -4,6 +4,7 @@ import os
 
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
+REPOSITORY_PATH = os.path.dirname(PROJECT_PATH)
 
 ADMINS = ()
 MANAGERS = ADMINS
