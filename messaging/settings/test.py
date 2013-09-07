@@ -13,12 +13,6 @@ DATABASES = {
 
 SECRET_KEY = 'some secret key'
 
-TEST_RUNNER = 'discover_runner.DiscoverRunner'
-INSTALLED_APPS += (
-    'discover_runner',
-)
-TEST_DISCOVER_TOP_LEVEL = REPOSITORY_PATH
-
 # Speeding up the tests.
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
