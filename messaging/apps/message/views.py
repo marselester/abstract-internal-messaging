@@ -4,6 +4,7 @@ from django.contrib import messages as flash_messages
 from django.shortcuts import redirect
 
 from messaging.common.decorators import ValidUserMixin
+from messaging.apps.message import tasks
 from . import forms
 
 
@@ -38,6 +39,8 @@ class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
         message = form.save(False)
         message.sender = user
         message.save()
+
+        tasks.send_broadcast_message.delay(message.pk)
 
         flash_messages.success(self.request, 'Broadcast message was sent.')
 
