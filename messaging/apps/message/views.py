@@ -1,7 +1,10 @@
 # coding: utf-8
 from django.views import generic
+from django.contrib import messages as flash_messages
+from django.shortcuts import redirect
 
 from messaging.common.decorators import ValidUserMixin
+from . import forms
 
 
 class MessageInbox(ValidUserMixin, generic.ListView):
@@ -24,9 +27,21 @@ class MessageComposeDirect(ValidUserMixin, generic.View):
     pass
 
 
-class MessageComposeBroadcast(ValidUserMixin, generic.View):
+class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
 
-    pass
+    form_class = forms.MessageComposeBroadcastForm
+    template_name = 'message/compose_broadcast.html'
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        message = form.save(False)
+        message.sender = user
+        message.save()
+
+        flash_messages.success(self.request, 'Broadcast message was sent.')
+
+        return redirect('dashboard')
 
 
 class MessageComposeGroup(ValidUserMixin, generic.View):

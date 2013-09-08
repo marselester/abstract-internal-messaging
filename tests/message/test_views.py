@@ -2,6 +2,7 @@
 from django_webtest import WebTest
 
 from ..common import ViewTestMixin
+from .. import factories
 
 
 class MessageShowTest(ViewTestMixin, WebTest):
@@ -73,12 +74,25 @@ class MessageComposeDirectTest(ViewTestMixin, WebTest):
 
 class MessageComposeBroadcastTest(ViewTestMixin, WebTest):
 
+    url = '/messages/compose/broadcast/'
+    dashboard_url = '/'
+
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
-        url = '/messages/compose/broadcast/'
+        response = self.app.get(self.url)
 
-        response = self.app.get(url)
+        self._test_sign_in_redirect_url(response, self.url)
 
-        self._test_sign_in_redirect_url(response, url)
+    def test_message_is_successfully_sent(self):
+        user = factories.UserF()
+        response = self.app.get(self.url, user=user)
+
+        form = response.form
+        form['subject'] = 'hi'
+        form['content'] = 'How are you?'
+        response = form.submit()
+
+        self.assertRedirects(response, self.dashboard_url)
+        self.assertContains(response.follow(), 'Broadcast message was sent')
 
 
 class MessageComposeGroupTest(ViewTestMixin, WebTest):
