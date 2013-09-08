@@ -18,6 +18,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'djcelery',
+    'autocomplete_light',
 
     'messaging.apps.account',
     'messaging.apps.message',
