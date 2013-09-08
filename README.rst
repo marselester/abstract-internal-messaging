@@ -28,4 +28,4 @@ In order to run tests run:
 .. code-block:: console
 
     $ pip install -r requirements_tests.txt
-    $ ./manage.py test --settings=messaging.settings.test
+    $ ./manage.py test
