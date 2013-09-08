@@ -1,7 +1,8 @@
 # coding: utf-8
 from django.views import generic
 from django.contrib import messages as flash_messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.models import Group
 
 from messaging.common.decorators import ValidUserMixin
 from messaging.apps.message import tasks
@@ -47,9 +48,32 @@ class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
         return redirect('dashboard')
 
 
-class MessageComposeGroup(ValidUserMixin, generic.View):
+class MessageComposeGroup(ValidUserMixin, generic.CreateView):
 
-    pass
+    form_class = forms.MessageComposeGroupForm
+    template_name = 'message/compose_group.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.group = get_object_or_404(Group, pk=kwargs['group_pk'])
+        return super(MessageComposeGroup, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(MessageComposeGroup, self).get_context_data(**kwargs)
+        context['group'] = self.group
+        return context
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        message = form.save(False)
+        message.sender = user
+        message.save()
+
+        tasks.send_group_message.delay(message.pk, self.group.pk)
+
+        flash_messages.success(self.request, 'Group message was sent.')
+
+        return redirect('dashboard')
 
 
 class MessageMarkAsRead(ValidUserMixin, generic.View):

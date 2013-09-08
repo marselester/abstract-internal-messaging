@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="" method="post" id="compose-broadcast-message-form">
+<form action="" method="post" id="compose-group-message-form">
     {% csrf_token %}
-    To: all
+    To members of the: {{ group.name }}
     {{ form.as_p }}
     <input type="submit" value="Send"/>
 </form>

@@ -84,9 +84,10 @@ class MessageComposeBroadcastTest(ViewTestMixin, WebTest):
 
     def test_message_is_successfully_sent(self):
         user = factories.UserF()
+
         response = self.app.get(self.url, user=user)
 
-        form = response.form
+        form = response.forms['compose-broadcast-message-form']
         form['subject'] = 'hi'
         form['content'] = 'How are you?'
         response = form.submit()
@@ -97,6 +98,8 @@ class MessageComposeBroadcastTest(ViewTestMixin, WebTest):
 
 class MessageComposeGroupTest(ViewTestMixin, WebTest):
 
+    dashboard_url = '/'
+
     def test_404_when_message_pk_is_non_arabic_numeral(self):
         # ``\d`` regex is valid for "๓".
         thai_number_four = '๓'
@@ -104,9 +107,31 @@ class MessageComposeGroupTest(ViewTestMixin, WebTest):
 
         self.app.get(url, status=404)
 
-    def test_redirect_to_login_page_when_user_is_not_logged_in(self):
+    def test_404_when_group_is_not_found(self):
+        user = factories.UserF()
         url = '/messages/compose/group/1/'
+
+        self.app.get(url, user=user, status=404)
+
+    def test_redirect_to_login_page_when_user_is_not_logged_in(self):
+        group = factories.GroupF()
+        url = '/messages/compose/group/{}/'.format(group.pk)
 
         response = self.app.get(url)
 
         self._test_sign_in_redirect_url(response, url)
+
+    def test_message_is_successfully_sent(self):
+        group = factories.GroupF()
+        url = '/messages/compose/group/{}/'.format(group.pk)
+        user = factories.UserF()
+
+        response = self.app.get(url, user=user)
+
+        form = response.forms['compose-group-message-form']
+        form['subject'] = 'hi'
+        form['content'] = 'How are you?'
+        response = form.submit()
+
+        self.assertRedirects(response, self.dashboard_url)
+        self.assertContains(response.follow(), 'Group message was sent')
