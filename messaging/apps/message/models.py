@@ -3,12 +3,14 @@ from django.db import models, transaction, IntegrityError, connection
 from django.contrib.auth.models import User
 
 from messaging.common.db import create_server_side_cursor
+from .redis_ import redis_msg
 
 
 NEW_RECIPIENT_OF_MESSAGE_SQL = '''
 INSERT INTO message_recipients (message_id, user_id)
 VALUES (%s, %s)
 '''
+REDIS_UNREAD_MESSAGES_KEY = 'users:unread:{user_id}'
 
 
 class Message(models.Model):
@@ -38,3 +40,8 @@ class Message(models.Model):
             except IntegrityError:
                 # TODO: log it.
                 pass
+            else:
+                redis_msg.sadd(
+                    REDIS_UNREAD_MESSAGES_KEY.format(user_id=user_id),
+                    self.id
+                )
