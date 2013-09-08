@@ -2,6 +2,8 @@
 import factory
 from django.contrib.auth.models import User
 
+from messaging.apps.message.models import Message
+
 
 class UserF(factory.DjangoModelFactory):
 
@@ -27,3 +29,12 @@ class UserF(factory.DjangoModelFactory):
             if create:
                 user.save()
         return user
+
+
+class MessageF(factory.DjangoModelFactory):
+
+    FACTORY_FOR = Message
+
+    sender = factory.SubFactory(UserF)
+    subject = 'Hello'
+    content = 'How are you?'
