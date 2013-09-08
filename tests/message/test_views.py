@@ -64,12 +64,28 @@ class MessageSentTest(ViewTestMixin, WebTest):
 
 class MessageComposeDirectTest(ViewTestMixin, WebTest):
 
+    url = '/messages/compose/direct/'
+    dashboard_url = '/'
+
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
-        url = '/messages/compose/direct/'
+        response = self.app.get(self.url)
 
-        response = self.app.get(url)
+        self._test_sign_in_redirect_url(response, self.url)
 
-        self._test_sign_in_redirect_url(response, url)
+    def test_message_is_successfully_sent(self):
+        user = factories.UserF()
+        recipient = factories.UserF()
+
+        response = self.app.get(self.url, user=user)
+
+        form = response.forms['compose-direct-message-form']
+        form['recipients'].force_value([recipient.pk])
+        form['subject'] = 'hi'
+        form['content'] = 'How are you?'
+        response = form.submit()
+
+        self.assertRedirects(response, self.dashboard_url)
+        self.assertContains(response.follow(), 'Direct message was sent')
 
 
 class MessageComposeBroadcastTest(ViewTestMixin, WebTest):
@@ -123,6 +139,8 @@ class MessageComposeGroupTest(ViewTestMixin, WebTest):
 
     def test_message_is_successfully_sent(self):
         group = factories.GroupF()
+        for user_index in xrange(2):
+            factories.UserF.create(groups=(group,)).pk
         url = '/messages/compose/group/{}/'.format(group.pk)
         user = factories.UserF()
 

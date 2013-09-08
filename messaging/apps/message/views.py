@@ -24,9 +24,24 @@ class MessageShow(ValidUserMixin, generic.DetailView):
     pass
 
 
-class MessageComposeDirect(ValidUserMixin, generic.View):
+class MessageComposeDirect(ValidUserMixin, generic.CreateView):
 
-    pass
+    form_class = forms.MessageComposeDirectForm
+    template_name = 'message/compose_direct.html'
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        message = form.save(False)
+        message.sender = user
+        message.save()
+
+        recipients_pks = form.cleaned_data['recipients']
+        tasks.send_direct_message.delay(message.pk, recipients_pks)
+
+        flash_messages.success(self.request, 'Direct message was sent.')
+
+        return redirect('dashboard')
 
 
 class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
