@@ -6,7 +6,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 REPOSITORY_DIR = os.path.dirname(BASE_DIR)
 
-ALLOWED_HOSTS = []
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = (
@@ -18,6 +19,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'djcelery',
+    'gunicorn',
 
     'messaging.apps.account',
     'messaging.apps.message',
