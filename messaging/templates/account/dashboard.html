@@ -9,10 +9,12 @@ a <a href="{% url 'msg_compose_broadcast' %}">broadcast message</a>
 and group message as well:
 
 <ul>
+{% for group in groups %}
     <li>
-        #group name #members quantity
-        <a href="{% url 'msg_compose_group' 1 %}">compose to all members</a>
+        {{ group.name }} #members quantity
+        <a href="{% url 'msg_compose_group' group.pk %}">compose to all members</a>
     </li>
+{% endfor %}
 </ul>
 
 <h2>Inbox (5 / 500)</h2>
