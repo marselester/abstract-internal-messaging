@@ -17,6 +17,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'djcelery',
+
     'messaging.apps.account',
     'messaging.apps.message',
 )
@@ -56,5 +58,13 @@ STATICFILES_DIRS = (
 
 MESSAGE_APP_REDIS_URL = 'redis://localhost:6379'
 MESSAGE_APP_REDIS_DB = 0
+
+BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/2'
+CELERY_DISABLE_RATE_LIMITS = True
+
+import djcelery
+djcelery.setup_loader()
+
 
 LOGIN_REDIRECT_URL = '/'
