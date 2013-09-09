@@ -22,7 +22,18 @@ class MessageSent(ValidUserMixin, generic.ListView):
 
 class MessageShow(ValidUserMixin, generic.DetailView):
 
-    pass
+    template_name = 'message/show.html'
+
+    def get_object(self):
+        user = self.request.user
+        message_pk = self.kwargs.get('message_pk')
+        try:
+            message = user.sent_messages.get(pk=message_pk)
+        except Message.DoesNotExist:
+            # TODO: Get rid of JOINs. Check ``message_recipients`` M-M table
+            # and get message by pk.
+            message = get_object_or_404(user.inbox, pk=message_pk)
+        return message
 
 
 class MessageComposeDirect(ValidUserMixin, generic.CreateView):
