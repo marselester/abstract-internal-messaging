@@ -6,6 +6,13 @@ from django.contrib.auth.models import User
 from messaging.apps.message.models import Message
 
 
+class MessageComposeForm(forms.ModelForm):
+
+    class Meta:
+        model = Message
+        fields = ('subject', 'content',)
+
+
 class UserAutocomplete(autocomplete_light.AutocompleteModelBase):
 
     search_fields = ['^first_name', 'last_name']
@@ -13,27 +20,9 @@ class UserAutocomplete(autocomplete_light.AutocompleteModelBase):
 autocomplete_light.register(User, UserAutocomplete)
 
 
-class MessageComposeDirectForm(forms.ModelForm):
+class MessageComposeDirectForm(MessageComposeForm):
 
     recipients = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
         widget=autocomplete_light.MultipleChoiceWidget('UserAutocomplete')
     )
-
-    class Meta:
-        model = Message
-        fields = ('subject', 'content',)
-
-
-class MessageComposeBroadcastForm(forms.ModelForm):
-
-    class Meta:
-        model = Message
-        fields = ('subject', 'content',)
-
-
-class MessageComposeGroupForm(forms.ModelForm):
-
-    class Meta:
-        model = Message
-        fields = ('subject', 'content',)

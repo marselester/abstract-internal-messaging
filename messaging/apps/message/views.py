@@ -46,7 +46,7 @@ class MessageComposeDirect(ValidUserMixin, generic.CreateView):
 
 class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
 
-    form_class = forms.MessageComposeBroadcastForm
+    form_class = forms.MessageComposeForm
     template_name = 'message/compose_broadcast.html'
 
     def form_valid(self, form):
@@ -65,7 +65,7 @@ class MessageComposeBroadcast(ValidUserMixin, generic.CreateView):
 
 class MessageComposeGroup(ValidUserMixin, generic.CreateView):
 
-    form_class = forms.MessageComposeGroupForm
+    form_class = forms.MessageComposeForm
     template_name = 'message/compose_group.html'
 
     def dispatch(self, request, *args, **kwargs):
