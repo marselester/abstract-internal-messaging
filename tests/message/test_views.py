@@ -34,12 +34,30 @@ class MessageInboxTest(ViewTestMixin, WebTest):
 
 class MessageMarkAsReadTest(ViewTestMixin, WebTest):
 
+    url = '/messages/inbox/mark_as_read/'
+    dashboard_url = '/'
+    csrf_checks = False
+
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
-        url = '/messages/inbox/mark_as_read/'
+        response = self.app.get(self.url)
 
-        response = self.app.get(url)
+        self._test_sign_in_redirect_url(response, self.url)
 
-        self._test_sign_in_redirect_url(response, url)
+    def test_404_when_message_is_not_found(self):
+        user = factories.UserF()
+
+        self.app.post(self.url, user=user, status=404)
+
+    def test_message_is_successfully_marked_as_read(self):
+        user = factories.UserF()
+        params = {
+            'message_pk': factories.MessageF().pk
+        }
+
+        response = self.app.post(self.url, params, user=user)
+
+        self.assertRedirects(response, self.dashboard_url)
+        self.assertContains(response.follow(), 'Message was marked as read')
 
 
 class MessageDeleteTest(ViewTestMixin, WebTest):

@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 from messaging.common.decorators import ValidUserMixin
 from messaging.apps.message import tasks
 from . import forms
+from .models import Message
 
 
 class MessageInbox(ValidUserMixin, generic.ListView):
@@ -93,7 +94,17 @@ class MessageComposeGroup(ValidUserMixin, generic.CreateView):
 
 class MessageMarkAsRead(ValidUserMixin, generic.View):
 
-    pass
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        # TODO: It is possible not to get message from PostgreSQL and
+        # directly delete message id from "unread" set in Redis.
+        message_pk = request.POST.get('message_pk')
+        message = get_object_or_404(Message, pk=message_pk)
+        message.mark_as_read_by_user(user.pk)
+
+        flash_messages.success(request, 'Message was marked as read.')
+
+        return redirect('dashboard')
 
 
 class MessageDelete(ValidUserMixin, generic.View):

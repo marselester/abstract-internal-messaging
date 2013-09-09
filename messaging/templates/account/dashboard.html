@@ -24,8 +24,16 @@ and group message as well:
     <li>
         <a href="{% url 'msg_show' message.pk %}">{{ message.sender }} {{ message.subject }}</a>
         {{ message.datetime_created }}
-        <a href="{% url 'msg_mark_as_read' %}">mark as read</a>
-        <a href="{% url 'msg_delete' %}">delete</a>
+        <form action="{% url 'msg_mark_as_read' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="message_pk" value="{{ message.pk }}">
+            <input type="submit" value="mark as read"/>
+        </form>
+        <form action="{% url 'msg_delete' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="message_pk" value="{{ message.pk }}">
+            <input type="submit" value="delete"/>
+        </form>
     </li>
 {% endfor %}
 </ul>
