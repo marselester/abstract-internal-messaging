@@ -48,6 +48,8 @@ class Message(models.Model):
                     REDIS_UNREAD_MESSAGES_KEY.format(user_id=user_id),
                     self.id
                 )
+        # TODO: Test perfomance with ``regular_cursor.executemany()`` and
+        # Redis ``SADD`` with multiple parameters.
 
     def mark_as_read_by_user(self, user_id):
         redis_msg.srem(REDIS_UNREAD_MESSAGES_KEY.format(user_id=user_id),
