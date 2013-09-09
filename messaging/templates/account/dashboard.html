@@ -17,15 +17,17 @@ and group message as well:
 {% endfor %}
 </ul>
 
-<h2>Inbox (5 / 500)</h2>
+<h2>Inbox ({{ inbox_count }} / {{ inbox_total_count }})</h2>
 
 <ul>
+{% for message in inbox %}
     <li>
-        <a href="{% url 'msg_show' 1 %}">#from #subject</a>
-        #date
+        <a href="{% url 'msg_show' message.pk %}">{{ message.sender }} {{ message.subject }}</a>
+        {{ message.datetime_created }}
         <a href="{% url 'msg_mark_as_read' %}">mark as read</a>
         <a href="{% url 'msg_delete' %}">delete</a>
     </li>
+{% endfor %}
 </ul>
 <a href="{% url 'msg_inbox_list' %}">More</a>
 

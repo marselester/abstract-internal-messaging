@@ -1,16 +1,17 @@
 # coding: utf-8
+from model_utils.managers import PassThroughManager
 from django.db import models, transaction, IntegrityError, connection
 from django.contrib.auth.models import User
 
 from messaging.common.db import create_server_side_cursor
-from .redis_ import redis_msg
+from .managers import MessageQuerySet
+from .redis_ import redis_msg, REDIS_UNREAD_MESSAGES_KEY
 
 
 NEW_RECIPIENT_OF_MESSAGE_SQL = '''
 INSERT INTO message_recipients (message_id, user_id)
 VALUES (%s, %s)
 '''
-REDIS_UNREAD_MESSAGES_KEY = 'users:unread:{user_id}'
 
 
 class Message(models.Model):
@@ -22,6 +23,8 @@ class Message(models.Model):
     subject = models.CharField(max_length=200)
     content = models.TextField()
     datetime_created = models.DateTimeField(auto_now=True)
+
+    objects = PassThroughManager.for_queryset_class(MessageQuerySet)()
 
     @transaction.atomic
     def send_to(self, recipients_qs):
