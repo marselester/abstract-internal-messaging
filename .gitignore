@@ -2,3 +2,4 @@
 .DS_Store
 *.db
 /messaging/settings/local.py
+/messaging/collected_static
