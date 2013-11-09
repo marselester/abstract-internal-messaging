@@ -4,6 +4,10 @@ Abstract Internal Messaging System
 
 This is an interview test task.
 
+.. note::
+    It is used as example Django project in
+    `Developing Django project with SaltStack`_ post.
+
 Allow sending of messages between individual users, identified by the unique
 key of their record in the system. Messages are in markdown format, and
 auto-complete of recipients would be a bonus.
@@ -29,3 +33,5 @@ In order to run tests run:
 
     $ pip install -r requirements_tests.txt
     $ ./manage.py test
+
+.. _Developing Django project with SaltStack: http://marselester.ru/developing-django-project-with-saltstack.html
