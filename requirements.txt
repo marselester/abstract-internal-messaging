@@ -1,4 +1,4 @@
--e git+git://github.com/django/django.git@1.6b2#egg=django
+Django==1.6
 psycopg2==2.5.1
 redis==2.8.0
 django-celery==3.0.23
