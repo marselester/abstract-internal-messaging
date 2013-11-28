@@ -12,3 +12,5 @@ DATABASES = {
 }
 
 SECRET_KEY = 'some secret key'
+
+ALLOWED_HOSTS = ['*']
