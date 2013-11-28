@@ -6,7 +6,9 @@ This is an interview test task.
 
 .. note::
     It is used as example Django project in
-    `Developing Django project with SaltStack`_ post.
+    `Developing Django project with SaltStack`_,
+    `Developing & Deploying Django project with SaltStack`_,
+    `Deploy Abstract Internal Messaging System`_.
 
 Allow sending of messages between individual users, identified by the unique
 key of their record in the system. Messages are in markdown format, and
@@ -35,3 +37,5 @@ In order to run tests run:
     $ ./manage.py test
 
 .. _Developing Django project with SaltStack: http://marselester.ru/developing-django-project-with-saltstack.html
+.. _Developing & Deploying Django project with SaltStack: http://marselester.ru/developing-and-deploying-django-project-with-saltstack.html
+.. _Deploy Abstract Internal Messaging System: https://github.com/marselester/abstract-internal-messaging-deploy
