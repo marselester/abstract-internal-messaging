@@ -6,7 +6,6 @@ from .. import factories
 
 
 class MessageShowTest(ViewTestMixin, WebTest):
-
     def test_404_when_message_pk_is_non_arabic_numeral(self):
         # ``\d`` regex is valid for "๓".
         thai_number_four = '๓'
@@ -23,7 +22,6 @@ class MessageShowTest(ViewTestMixin, WebTest):
 
 
 class MessageInboxTest(ViewTestMixin, WebTest):
-
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
         url = '/messages/inbox/'
 
@@ -61,7 +59,6 @@ class MessageMarkAsReadTest(ViewTestMixin, WebTest):
 
 
 class MessageDeleteTest(ViewTestMixin, WebTest):
-
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
         url = '/messages/inbox/delete/'
 
@@ -71,7 +68,6 @@ class MessageDeleteTest(ViewTestMixin, WebTest):
 
 
 class MessageSentTest(ViewTestMixin, WebTest):
-
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
         url = '/messages/sent/'
 

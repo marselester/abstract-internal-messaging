@@ -2,7 +2,6 @@
 """Settings that are the same for both development and production."""
 import os
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 REPOSITORY_DIR = os.path.dirname(BASE_DIR)
 

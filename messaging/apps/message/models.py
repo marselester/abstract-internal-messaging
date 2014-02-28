@@ -7,7 +7,6 @@ from messaging.common.db import create_server_side_cursor
 from .managers import MessageQuerySet
 from .redis_ import redis_msg, REDIS_UNREAD_MESSAGES_KEY
 
-
 NEW_RECIPIENT_OF_MESSAGE_SQL = '''
 INSERT INTO message_recipients (message_id, user_id)
 VALUES (%s, %s)

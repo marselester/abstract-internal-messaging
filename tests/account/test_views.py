@@ -6,7 +6,6 @@ from ..common import ViewTestMixin
 
 
 class DashboardTest(ViewTestMixin, WebTest):
-
     def test_redirect_to_login_page_when_user_is_not_logged_in(self):
         url = '/'
 

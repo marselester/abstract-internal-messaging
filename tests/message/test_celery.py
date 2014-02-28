@@ -6,7 +6,6 @@ from .. import factories
 
 
 class SendBroadcastMessageTest(TestCase):
-
     def test_message_is_successfully_sent_to_three_users(self):
         message = factories.MessageF()
         recipients_pks = [factories.UserF().pk for user_index in xrange(3)]
@@ -32,7 +31,6 @@ class SendBroadcastMessageTest(TestCase):
 
 
 class SendDirectMessageTest(TestCase):
-
     def test_message_is_successfully_sent_to_two_users(self):
         message = factories.MessageF()
         recipients_pks = [factories.UserF().pk for user_index in xrange(2)]
@@ -45,7 +43,6 @@ class SendDirectMessageTest(TestCase):
 
 
 class SendGroupMessageTest(TestCase):
-
     def test_message_is_successfully_sent_to_group_of_two_people(self):
         message = factories.MessageF()
         group = factories.GroupF()

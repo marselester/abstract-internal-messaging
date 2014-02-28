@@ -3,7 +3,6 @@ from django.contrib import admin
 
 from messaging.apps.account.views import Dashboard
 
-
 admin.autodiscover()
 
 urlpatterns = patterns('',

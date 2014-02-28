@@ -11,12 +11,10 @@ from .models import Message
 
 
 class MessageInbox(ValidUserMixin, generic.ListView):
-
     pass
 
 
 class MessageSent(ValidUserMixin, generic.ListView):
-
     pass
 
 
@@ -104,7 +102,6 @@ class MessageComposeGroup(ValidUserMixin, generic.CreateView):
 
 
 class MessageMarkAsRead(ValidUserMixin, generic.View):
-
     def post(self, request, *args, **kwargs):
         user = request.user
         # TODO: It is possible not to get message from PostgreSQL and
@@ -119,5 +116,4 @@ class MessageMarkAsRead(ValidUserMixin, generic.View):
 
 
 class MessageDelete(ValidUserMixin, generic.View):
-
     pass
