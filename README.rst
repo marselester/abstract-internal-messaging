@@ -36,6 +36,6 @@ In order to run tests run:
     $ pip install -r requirements_tests.txt
     $ ./manage.py test
 
-.. _Developing Django project with SaltStack: http://marselester.ru/developing-django-project-with-saltstack.html
-.. _Developing & Deploying Django project with SaltStack: http://marselester.ru/developing-and-deploying-django-project-with-saltstack.html
+.. _Developing Django project with SaltStack: http://marselester.com/developing-django-project-with-saltstack.html
+.. _Developing & Deploying Django project with SaltStack: http://marselester.com/developing-and-deploying-django-project-with-saltstack.html
 .. _Deploy Abstract Internal Messaging System: https://github.com/marselester/abstract-internal-messaging-deploy
